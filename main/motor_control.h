@@ -2,10 +2,11 @@
 // jbowman@hmc.edu
 // created: 12/26/24
 
-#ifndef MOTOR_CONTROL_H
-#define MOTOR_CONTROL_H
-#define pin 8
+// #ifndef MOTOR_CONTROL_H
+// #define MOTOR_CONTROL_H
 
-void pwm_out(char pin, char duty_cycle);
+// #define pin 8;
 
-#endif
+// void pwm_out(char pin, char duty_cycle);
+
+// #endif
