@@ -12,9 +12,9 @@
 #include <Wire.h> // holds all I2C communication functions
 #include <Arduino.h>
 
-/***********************
-*  I2C clock and data line defines 
-***********************/
+/***********************************
+*  I2C clock and data line defines *
+***********************************/
 #define SCL_PIN 15
 #define SDA_PIN 16
 #define WHO_AM_I 0x0F      // used for I2C verification
