@@ -1,7 +1,30 @@
+// Jason Bowman
+// jbowman@hmc.edu
+// created: 01/03/25
+// functions for running I2C commuications
 
+/***********************
+*   header includes    *
+***********************/
+#include "angle_decode.h"
 
+/************************
+* local variable define *
+************************/
+  int16_t theta_ankle;
+  int16_t theta_1;
+  int16_t theta_2;
+  int16_t theta_3;
+  int16_t theta_4;
+  int16_t theta_knee;
+  int16_t theta_5;
+  int16_t theta_6;
+  int16_t theta_7;
+  int16_t theta_hip;
 
-
+/*******************************************
+*  decode angles based for given body part *
+*******************************************/
 int16_t decode_angle(int body_part, int16_t accel_x, int16_t accel_y, int16_t accel_z) {
     // ANKLE
     if (body_part == ANKLE) { // normal scenario

@@ -6,6 +6,7 @@
 *   header includes    *
 ***********************/
 #include "i2c.h"
+#include "angle_decode.h"
 
 /***********************
 *  chip and registers  *
@@ -34,32 +35,62 @@ void setup() {
   init_i2c();
   verify_coms(IMU_ADDRESS_FEMUR);
   config_imu_accel(IMU_ADDRESS_FEMUR, config_val);
+  verify_coms(IMU_ADDRESS_SHIN);
+  config_imu_accel(IMU_ADDRESS_SHIN, config_val);
 }
 
 /***********************
 *      main loop       *
 ***********************/
 void loop() {
-  // read and print the X, Y, and Z axis accelerations
-  uint8_t lsb_x = readRegister(IMU_ADDRESS_FEMUR, OUTX_L_A);        // lsb read
-  uint8_t msb_x = readRegister(IMU_ADDRESS_FEMUR, OUTX_H_A);        // msb read
-  int16_t combinedValue_x = (int16_t)((uint8_t)lsb_x | (msb_x << 8)); // combine lsb and msb values to 16-bit signed acceleration
+  // read and print the X, Y, and Z axis accelerations (FEMUR 0x6A)
+  uint8_t lsb_x_femur = readRegister(IMU_ADDRESS_FEMUR, OUTX_L_A);        // lsb read
+  uint8_t msb_x_femur = readRegister(IMU_ADDRESS_FEMUR, OUTX_H_A);        // msb read
+  int16_t combinedValue_x_femur = (int16_t)((uint8_t)lsb_x_femur | (msb_x_femur << 8)); // combine lsb and msb values to 16-bit signed acceleration
 
   // read and print the X, Y, and Z axis accelerations
-  uint8_t lsb_y = readRegister(IMU_ADDRESS_FEMUR, OUTY_L_A);        // lsb read
-  uint8_t msb_y = readRegister(IMU_ADDRESS_FEMUR, OUTY_H_A);        // msb read
-  int16_t combinedValue_y = (int16_t)((uint8_t)lsb_y | (msb_y << 8)); // combine lsb and msb values to 16-bit signed acceleration
+  uint8_t lsb_y_femur = readRegister(IMU_ADDRESS_FEMUR, OUTY_L_A);        // lsb read
+  uint8_t msb_y_femur = readRegister(IMU_ADDRESS_FEMUR, OUTY_H_A);        // msb read
+  int16_t combinedValue_y_femur = (int16_t)((uint8_t)lsb_y_femur | (msb_y_femur << 8)); // combine lsb and msb values to 16-bit signed acceleration
 
   // read and print the X, Y, and Z axis accelerations
-  uint8_t lsb_z = readRegister(IMU_ADDRESS_FEMUR, OUTZ_L_A);        // lsb read
-  uint8_t msb_z = readRegister(IMU_ADDRESS_FEMUR, OUTZ_H_A);        // msb read
-  int16_t combinedValue_z = (int16_t)((uint8_t)lsb_z | (msb_z << 8)); // combine lsb and msb values to 16-bit signed acceleration
+  uint8_t lsb_z_femur = readRegister(IMU_ADDRESS_FEMUR, OUTZ_L_A);        // lsb read
+  uint8_t msb_z_femur = readRegister(IMU_ADDRESS_FEMUR, OUTZ_H_A);        // msb read
+  int16_t combinedValue_z_femur = (int16_t)((uint8_t)lsb_z_femur | (msb_z_femur << 8)); // combine lsb and msb values to 16-bit signed acceleration
+
+
+
+  // read and print the X, Y, and Z axis accelerations (SHIN 0x6B)
+  uint8_t lsb_x_shin = readRegister(IMU_ADDRESS_SHIN, OUTX_L_A);        // lsb read
+  uint8_t msb_x_shin = readRegister(IMU_ADDRESS_SHIN, OUTX_H_A);        // msb read
+  int16_t combinedValue_x_shin = (int16_t)((uint8_t)lsb_x_shin | (msb_x_shin << 8)); // combine lsb and msb values to 16-bit signed acceleration
+
+  // read and print the X, Y, and Z axis accelerations
+  uint8_t lsb_y_shin = readRegister(IMU_ADDRESS_SHIN, OUTY_L_A);        // lsb read
+  uint8_t msb_y_shin = readRegister(IMU_ADDRESS_SHIN, OUTY_H_A);        // msb read
+  int16_t combinedValue_y_shin = (int16_t)((uint8_t)lsb_y_shin | (msb_y_shin << 8)); // combine lsb and msb values to 16-bit signed acceleration
+
+  // read and print the X, Y, and Z axis accelerations
+  uint8_t lsb_z_shin = readRegister(IMU_ADDRESS_SHIN, OUTZ_L_A);        // lsb read
+  uint8_t msb_z_shin = readRegister(IMU_ADDRESS_SHIN, OUTZ_H_A);        // msb read
+  int16_t combinedValue_z_shin = (int16_t)((uint8_t)lsb_z_shin | (msb_z_shin << 8)); // combine lsb and msb values to 16-bit signed acceleration
+
+
+  // decode angles
+  int16_t angle_ankle = decode_angle(ANKLE, combinedValue_x_shin, combinedValue_y_shin, combinedValue_z_shin);
+  int16_t angle_knee = decode_angle(KNEE, combinedValue_x_femur, combinedValue_y_femur, combinedValue_z_femur);
+
+  // // Print all values on one line with labels
+  // Serial.println("XF: " + String(combinedValue_x_femur) + 
+  //               " | YF: " + String(combinedValue_y_femur) + 
+  //               " | ZF: " + String(combinedValue_z_femur) + 
+  //               " | XS: " + String(combinedValue_x_shin) + 
+  //               " | YS: " + String(combinedValue_y_shin) + 
+  //               " | ZS: " + String(combinedValue_z_shin));
+  // delay(1000);
 
   // Print all values on one line with labels
-  Serial.print("Accel X: ");
-  Serial.print(combinedValue_x);
-  Serial.print(" | Accel Y: ");
-  Serial.print(combinedValue_y);
-  Serial.print(" | Accel Z: ");
-  Serial.println(combinedValue_z);
+  Serial.println("Ankle: " + String(angle_ankle) + 
+                " | Knee: " + String(angle_knee));
+
 }
