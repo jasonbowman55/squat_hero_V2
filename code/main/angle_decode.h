@@ -1,7 +1,7 @@
 // Jason Bowman
 // jbowman@hmc.edu
 // created: 01/04/25
-// functions for running I2C commuications
+// decode angles based on raw accel
 
 #ifndef ANGLE_DECODE_H
 #define ANGLE_DECODE_H
