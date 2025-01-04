@@ -6,7 +6,6 @@
 *   header includes    *
 ***********************/
 #include "i2c.h"
-#include <stdint.h>
 
 /***********************
 *  chip and registers  *

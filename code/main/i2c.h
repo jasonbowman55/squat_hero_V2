@@ -1,3 +1,8 @@
+// Jason Bowman
+// jbowman@hmc.edu
+// created: 01/03/25
+// functions for running I2C commuications
+
 #ifndef I2C_H
 #define I2C_H
 
@@ -10,8 +15,8 @@
 /***********************
 *  I2C clock and data line defines 
 ***********************/
-#define SCL_PIN 9
-#define SDA_PIN 8
+#define SCL_PIN 15
+#define SDA_PIN 16
 #define WHO_AM_I 0x0F      // used for I2C verification
 #define CTRL1_XL 0x10      // 104kHz - +/- 16g
 
