@@ -16,6 +16,7 @@ void init_i2c() {
   Wire.setClock(400000);         // set master clock speed to 400kHz high speed I2C
   Serial.println("I2C communication initialized");
 }
+
 /***********************
 *   IMU ACCEL CONFIG   *
 ***********************/
@@ -28,10 +29,12 @@ void config_imu_accel(byte imu_slave_address, byte config_val) {
 ***********************/
 void verify_coms(byte imu_slave_address) {
   byte who_am_i_val = readRegister(imu_slave_address, WHO_AM_I);
-  if (who_am_i_val == 0x6C) {
+  if (who_am_i_val == 0x6C) {           // THIS IS NOT THE CORRECT VALUE BASED ON DATASHEET
     Serial.println("Communication lock");
-  } else {
-    Serial.println("Failed communication lock");
+  } else {  // halt program is unexpected WHO_AM_I register is read incorrectly
+   // while(1) {
+      Serial.println("Failed communication lock");
+   // }
   }
 }
 

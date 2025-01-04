@@ -6,6 +6,7 @@
 *   header includes    *
 ***********************/
 #include "i2c.h"
+#include <stdint.h>
 
 /***********************
 *  chip and registers  *
@@ -32,20 +33,34 @@
 void setup() {
   Serial.begin(115200);
   init_i2c();
-  //verify_coms(IMU_ADDRESS_FEMUR);
-  //config_imu_accel(IMU_ADDRESS_FEMUR, config_val);
+  verify_coms(IMU_ADDRESS_FEMUR);
+  config_imu_accel(IMU_ADDRESS_FEMUR, config_val);
 }
-
-
 
 /***********************
 *      main loop       *
 ***********************/
 void loop() {
-  byte accel = readRegister(IMU_ADDRESS_FEMUR, OUTX_L_A);
+  // read and print the X, Y, and Z axis accelerations
+  uint8_t lsb_x = readRegister(IMU_ADDRESS_FEMUR, OUTX_L_A);        // lsb read
+  uint8_t msb_x = readRegister(IMU_ADDRESS_FEMUR, OUTX_H_A);        // msb read
+  int16_t combinedValue_x = (int16_t)((uint8_t)lsb_x | (msb_x << 8)); // combine lsb and msb values to 16-bit signed acceleration
 
-  Serial.print("Accel value: ");
-  Serial.println(accel);
-  
-  delay(5000);
+  // read and print the X, Y, and Z axis accelerations
+  uint8_t lsb_y = readRegister(IMU_ADDRESS_FEMUR, OUTY_L_A);        // lsb read
+  uint8_t msb_y = readRegister(IMU_ADDRESS_FEMUR, OUTY_H_A);        // msb read
+  int16_t combinedValue_y = (int16_t)((uint8_t)lsb_y | (msb_y << 8)); // combine lsb and msb values to 16-bit signed acceleration
+
+  // read and print the X, Y, and Z axis accelerations
+  uint8_t lsb_z = readRegister(IMU_ADDRESS_FEMUR, OUTZ_L_A);        // lsb read
+  uint8_t msb_z = readRegister(IMU_ADDRESS_FEMUR, OUTZ_H_A);        // msb read
+  int16_t combinedValue_z = (int16_t)((uint8_t)lsb_z | (msb_z << 8)); // combine lsb and msb values to 16-bit signed acceleration
+
+  // Print all values on one line with labels
+  Serial.print("Accel X: ");
+  Serial.print(combinedValue_x);
+  Serial.print(" | Accel Y: ");
+  Serial.print(combinedValue_y);
+  Serial.print(" | Accel Z: ");
+  Serial.println(combinedValue_z);
 }
