@@ -1,7 +1,7 @@
 // Jason Bowman
 // jbowman@hmc.edu
 // created: 01/03/25
-// functions for running I2C commuications
+// ANGLE_DECODE_CPP functions for decoding angles
 
 /***********************
 *   header includes    *
