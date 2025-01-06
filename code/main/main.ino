@@ -80,8 +80,6 @@ void setup() {
 ***********************/
 void loop() {
 
-  digitalWrite(45, HIGH);
-  digitalWrite(48, HIGH);
   
   server.handleClient(); // Handle client requests
 
