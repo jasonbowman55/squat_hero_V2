@@ -12,7 +12,8 @@
   #include <stdint.h>
   #include "data_collection.h"
   #include <Arduino.h>
-#include <cstdint>
+  #include <cstdint>
+  #include <math.h>
 
 /***********************
 *   Global Variabels   *

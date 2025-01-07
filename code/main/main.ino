@@ -35,8 +35,9 @@ void loop() {
   readAccel();  // read all accel data (16-bit)
   decodeAngles(x_shin, y_shin, z_shin, x_femur, y_femur, z_femur); // decode ankle and knee angles
   control(angle_ankle, angle_knee);
+  
   // Print all values on one line with labels
-  Serial.println("Ankle: " + String(angle_ankle) + 
-                " | Knee: " + String(angle_knee));
+  // Serial.println("Ankle: " + String(angle_ankle) + 
+  //               " | Knee: " + String(angle_knee));
 
 }

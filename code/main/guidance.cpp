@@ -9,7 +9,6 @@
 * local variable define *
 ************************/
 
-
 // configure the pins
 void init_haptics() {
   pinMode(REAR_HAPTIC, OUTPUT);
@@ -18,7 +17,12 @@ void init_haptics() {
 
 // FUNCTION
 void control(int16_t angle_ankle, int16_t angle_knee) {
-  if (angle_ankle > 90) {
+
+  //Serial.println("Ratio: " + String(ratio));
+
+  //Serial.println(": " + String(ratio) + " | Knee: " + String(angle_knee));
+
+  if ((angle_knee - 90) < angle_ankle) {
     digitalWrite(REAR_HAPTIC, HIGH);
     digitalWrite(FRONT_HAPTIC, LOW);
   } else {
